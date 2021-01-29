@@ -11,6 +11,8 @@
 #include <SDL2/SDL_image.h>
 #include <string>
 
+#include "texture_handler.h"
+
 class Rocket {
 private:
     float initial_mass;
@@ -29,7 +31,8 @@ private:
     SDL_Texture* force_text;
     SDL_Texture* fuel_text;
     SDL_Texture* velocity_text;
-    SDL_Texture* fire_sprite;
+    texture_t fire_sprite;
+    texture_t obamium;
     SDL_Texture* altitude_text;
     SDL_Texture* name_text;
     std::string name;

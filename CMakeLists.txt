@@ -5,5 +5,5 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(/usr/local/include)
 link_directories(/usr/local/lib)
-add_executable(rocket main.cpp rocket.cpp rocket.h)
+add_executable(rocket main.cpp rocket.cpp texture_handler.cpp)
 target_link_libraries(rocket SDL2 SDL2_image SDL2_ttf)

@@ -10,7 +10,13 @@ Rocket::Rocket(float mass, float fuel, SDL_Renderer* renderer) : position(100.f)
     stopped = false;
     dry_mass = mass - fuel;
 
-    fire_sprite = IMG_LoadTexture(renderer, "res/fire.png");
+    //fire_sprite = IMG_LoadTexture(renderer, "res/fire.png");
+
+    if(!TextureHandler::getInstance()->add_texture("res/fire.png", fire_sprite, renderer)) {
+        std::cerr << "OBAMA" << std::endl;
+    }
+    TextureHandler::getInstance()->add_texture("res/obamium.png", obamium, renderer);
+    TextureHandler::getInstance()->set_src_rect(obamium, Vector2<float>(498, 498));
     mass_text = nullptr;
     acceleration_text = nullptr;
     force_text = nullptr;
@@ -136,18 +142,21 @@ void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& 
     camera_y = position - 300;
     if (!stopped) {
 
-        dst.x = 500 - camera_x;
-        dst.y = 720 - (int)position + camera_y;
-        dst.w = 50;
-        dst.h = 50;
-        SDL_RenderCopy(renderer, fire_sprite, nullptr, &dst);
+        //dst.x = 500 - camera_x;
+        //dst.y = 720 - (int)position + camera_y;
+        //dst.w = 50;
+        //dst.h = 50;
+        //SDL_RenderCopy(renderer, fire_sprite, nullptr, &dst);
+
+        TextureHandler::getInstance()->render(renderer, fire_sprite, Vector2<float>(500 - camera_x, 720 - (int)position + camera_y), Vector2<float>(0.098, 0.098));
     }
 
-    SDL_Rect rock;
+    /*SDL_Rect rock;
     rock.x = 500 - camera_x;
     rock.y = 600 - (int)position + camera_y;
     rock.w = 50;
     rock.h = 120;
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderDrawRect(renderer, &rock);
+    SDL_RenderDrawRect(renderer, &rock);*/
+    TextureHandler::getInstance()->render(renderer, obamium, Vector2<float>(500 - camera_x, 600 - (int)position + camera_y), Vector2<float>(0.1f, 0.24f));
 }
