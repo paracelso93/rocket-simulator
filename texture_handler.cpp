@@ -19,6 +19,7 @@ bool TextureHandler::add_texture(const std::string& filePath, texture_t& id, SDL
     SDL_QueryTexture(mTextures[id], nullptr, nullptr, &w, &h);
     //mSizes[id] = Vector2<float>(w, h);
     mSizes.insert(std::pair<texture_t, Vector2<float> >(id, Vector2<float>(w, h)));
+    mSizes.insert(std::pair<texture_t, Vector2<float> >(id, Vector2<float>(0, 0)));
 
 	return true;
 }
@@ -38,8 +39,8 @@ void TextureHandler::render(SDL_Renderer* renderer, texture_t id, const Vector2<
 	}
 	
 	SDL_Rect src;
-	src.x = 0;
-	src.y = 0;
+	src.x = mPositions[id].x;
+	src.y = mPositions[id].y;
 
 	src.w = mSizes[id].x;
 	src.h = mSizes[id].y;
@@ -64,6 +65,15 @@ void TextureHandler::set_src_rect(texture_t id, const Vector2<float>& src) {
     }
 
     mSizes[id] = src;
+}
+
+void TextureHandler::set_src_position(texture_t id, const Vector2<float>& src) {
+    if (mTextures.find(id) == mTextures.end()) {
+        std::cerr << "texture " << std::to_string(id) << " doesn't exists!" << std::endl;
+        return;
+    }
+
+    mPositions[id] = src;
 }
 
 bool TextureHandler::point_in_texture(const Vector2<float>& point, const Vector2<float>& position, texture_t id) {

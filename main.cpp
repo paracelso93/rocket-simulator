@@ -37,10 +37,11 @@ int main() {
     rocket_data.mass = 4640.f + 2000.f;
     rocket_data.fuel_consumption = 73.47f;
     rocket_data.thrust = 180400.f;
-    TextureHandler::getInstance()->add_texture("res/obamium.png", rocket_data.rocket_sprite, renderer);
-    TextureHandler::getInstance()->set_src_rect(rocket_data.rocket_sprite, Vector2<float>(498, 498));
+    //extureHandler::getInstance()->add_texture("res/obamium.png", rocket_data.rocket_sprite, renderer);
+    //TextureHandler::getInstance()->set_src_rect(rocket_data.rocket_sprite, Vector2<float>(498, 498));
+    rocket_data.rocket_sprite = "res/obamium.png";
     Rocket rocket(rocket_data, renderer);
-    //Rocket rocket(4640.f + 2000.f, 1000.f, renderer);
+
     Uint32 startTime = 0;
     Uint32 endTime = 0;
     Uint32 delta = 160;
@@ -69,7 +70,7 @@ int main() {
         }
 
         rocket.update(1.f / fps);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_SetRenderDrawColor(renderer, 0x87, 0xCE, 0xEB, 255);
         SDL_RenderClear(renderer);
 
 

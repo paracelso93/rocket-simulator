@@ -6,15 +6,15 @@
 
 #include <iostream>
 
-Rocket::Rocket(float mass, float fuel, SDL_Renderer* renderer) : position(100.f), initial_mass(mass), mass(mass), velocity(0.f), acceleration(0.f), fuel(fuel), force(0.f) {
+Rocket::Rocket(float mass, float fuel, SDL_Renderer* renderer) : obamium("", Vector2<float>(0, 0), 0, 0, 0, 0, renderer), position(100.f), initial_mass(mass), mass(mass), velocity(0.f), acceleration(0.f), fuel(fuel), force(0.f) {
     stopped = false;
     dry_mass = mass - fuel;
 
     //fire_sprite = IMG_LoadTexture(renderer, "res/fire.png");
 
     TextureHandler::getInstance()->add_texture("res/flame.png", fire_sprite, renderer);
-    TextureHandler::getInstance()->add_texture("res/obamium.png", obamium, renderer);
-    TextureHandler::getInstance()->set_src_rect(obamium, Vector2<float>(498, 498));
+    //TextureHandler::getInstance()->add_texture("res/obamium.png", obamium, renderer);
+    //TextureHandler::getInstance()->set_src_rect(obamium, Vector2<float>(498, 498));
     mass_text = nullptr;
     acceleration_text = nullptr;
     force_text = nullptr;
@@ -27,7 +27,7 @@ Rocket::Rocket(float mass, float fuel, SDL_Renderer* renderer) : position(100.f)
     height = 5.45f;
 }
 
-Rocket::Rocket(const RocketData& data, SDL_Renderer* renderer) {
+Rocket::Rocket(const RocketData& data, SDL_Renderer* renderer) : obamium(data.rocket_sprite, Vector2<float>(500.f, 100.f), 6, 5, 29, 1.f / 24.f, renderer) {
     this->position = 100.f;
     this->initial_mass = data.mass;
     this->mass = data.mass;
@@ -39,7 +39,9 @@ Rocket::Rocket(const RocketData& data, SDL_Renderer* renderer) {
     this->dry_mass = this->mass - this->fuel;
 
     TextureHandler::getInstance()->add_texture("res/flame.png", fire_sprite, renderer);
-    this->obamium = data.rocket_sprite;
+
+    //this->obamium = data.rocket_sprite;
+
     //TextureHandler::getInstance()->add_texture("res/obamium.png", obamium, renderer);
     //TextureHandler::getInstance()->set_src_rect(obamium, Vector2<float>(498, 498));
 
@@ -93,6 +95,8 @@ void Rocket::update(float dt) {
         position = 100.f;
         velocity = 0.f;
     }
+
+    obamium.update(dt);
 }
 
 void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& camera_y) {
@@ -101,6 +105,8 @@ void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& 
     big_rect.y = 0;
     big_rect.w = 350;
     big_rect.h = 200;
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    SDL_RenderFillRect(renderer, &big_rect);
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     SDL_RenderDrawRect(renderer, &big_rect);
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
@@ -195,5 +201,7 @@ void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& 
     rock.h = 120;
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderDrawRect(renderer, &rock);*/
-    TextureHandler::getInstance()->render(renderer, obamium, Vector2<float>(500 - camera_x, 600 - (int)position + camera_y), Vector2<float>(0.1f, 0.24f));
+    obamium.position.y = 600 - (int)position + camera_y;
+    //TextureHandler::getInstance()->render(renderer, obamium, Vector2<float>(500 - camera_x, 600 - (int)position + camera_y), Vector2<float>(0.1f, 0.24f));
+    obamium.render(renderer);
 }

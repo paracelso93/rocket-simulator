@@ -11,7 +11,7 @@
 #include <SDL2/SDL_image.h>
 #include <string>
 
-#include "texture_handler.h"
+#include "animation.h"
 
 const float GRAVITATIONAL_ACCELERATION =  9.80665f;
 
@@ -24,7 +24,7 @@ struct RocketData {
     float thrust;
     float fuel_consumption;
 
-    texture_t rocket_sprite;
+    std::string rocket_sprite;
 };
 
 class Rocket {
@@ -48,7 +48,7 @@ private:
     SDL_Texture* fuel_text;
     SDL_Texture* velocity_text;
     texture_t fire_sprite;
-    texture_t obamium;
+    Animation obamium;
     SDL_Texture* altitude_text;
     SDL_Texture* name_text;
     std::string name;
