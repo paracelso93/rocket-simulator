@@ -26,7 +26,7 @@ int main() {
     }
     bool done = false;
 
-    SDL_Texture* ground = IMG_LoadTexture(renderer, "res/ground.png");
+    SDL_Texture* ground = IMG_LoadTexture(renderer, "res/ground2.png");
 
     Rocket rocket(4640.f + 2000.f, 3600.f, renderer);
     //Rocket rocket(4640.f + 2000.f, 1000.f, renderer);

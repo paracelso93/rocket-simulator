@@ -12,9 +12,7 @@ Rocket::Rocket(float mass, float fuel, SDL_Renderer* renderer) : position(100.f)
 
     //fire_sprite = IMG_LoadTexture(renderer, "res/fire.png");
 
-    if(!TextureHandler::getInstance()->add_texture("res/fire.png", fire_sprite, renderer)) {
-        std::cerr << "OBAMA" << std::endl;
-    }
+    TextureHandler::getInstance()->add_texture("res/flame.png", fire_sprite, renderer);
     TextureHandler::getInstance()->add_texture("res/obamium.png", obamium, renderer);
     TextureHandler::getInstance()->set_src_rect(obamium, Vector2<float>(498, 498));
     mass_text = nullptr;
@@ -67,13 +65,21 @@ void Rocket::update(float dt) {
 }
 
 void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& camera_y) {
+    SDL_Rect big_rect;
+    big_rect.x = 0;
+    big_rect.y = 0;
+    big_rect.w = 350;
+    big_rect.h = 200;
+    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+    SDL_RenderDrawRect(renderer, &big_rect);
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     std::string mass_string = "mass: " + std::to_string(mass);
     SDL_Surface* mass_surface = TTF_RenderText_Solid(font, mass_string.c_str(), {255, 0, 0, 255});
     mass_text = SDL_CreateTextureFromSurface(renderer, mass_surface);
     SDL_FreeSurface(mass_surface);
     SDL_Rect dst;
-    dst.x = 0;
-    dst.y = 0;
+    dst.x = 10;
+    dst.y = 10;
     dst.w = 24 * mass_string.length() / 2;
     dst.h = 24;
     SDL_RenderCopy(renderer, mass_text, nullptr, &dst);
@@ -85,7 +91,7 @@ void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& 
     velocity_text = SDL_CreateTextureFromSurface(renderer, velocity_surface);
     SDL_FreeSurface(velocity_surface);
     dst.w = 24 * mass_string.length() / 2;
-    dst.y = 25;
+    dst.y = 35;
     SDL_RenderCopy(renderer, velocity_text, nullptr, &dst);
     SDL_DestroyTexture(velocity_text);
 
@@ -95,7 +101,7 @@ void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& 
     force_text = SDL_CreateTextureFromSurface(renderer, force_surface);
     SDL_FreeSurface(force_surface);
     dst.w = 24 * mass_string.length() / 2;
-    dst.y = 50;
+    dst.y = 60;
     SDL_RenderCopy(renderer, force_text, nullptr, &dst);
     SDL_DestroyTexture(force_text);
 
@@ -105,7 +111,7 @@ void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& 
     acceleration_text = SDL_CreateTextureFromSurface(renderer, acceleration_surface);
     SDL_FreeSurface(acceleration_surface);
     dst.w = 24 * acceleration_string.length() / 2;
-    dst.y = 75;
+    dst.y = 85;
     SDL_RenderCopy(renderer, acceleration_text, nullptr, &dst);
     SDL_DestroyTexture(acceleration_text);
 
@@ -115,7 +121,7 @@ void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& 
     fuel_text = SDL_CreateTextureFromSurface(renderer, fuel_surface);
     SDL_FreeSurface(fuel_surface);
     dst.w = 24 * fuel_string.length() / 2;
-    dst.y = 100;
+    dst.y = 110;
     SDL_RenderCopy(renderer, fuel_text, nullptr, &dst);
     SDL_DestroyTexture(fuel_text);
 
@@ -125,7 +131,7 @@ void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& 
     altitude_text = SDL_CreateTextureFromSurface(renderer, altitude_surface);
     SDL_FreeSurface(altitude_surface);
     dst.w = 24 * altitude_string.length() / 2;
-    dst.y = 125;
+    dst.y = 135;
     SDL_RenderCopy(renderer, altitude_text, nullptr, &dst);
     SDL_DestroyTexture(altitude_text);
 
@@ -135,7 +141,7 @@ void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& 
     name_text = SDL_CreateTextureFromSurface(renderer, name_surface);
     SDL_FreeSurface(name_surface);
     dst.w = 24 * name_string.length() / 2;
-    dst.y = 150;
+    dst.y = 160;
     SDL_RenderCopy(renderer, name_text, nullptr, &dst);
     SDL_DestroyTexture(name_text);
 
@@ -148,7 +154,7 @@ void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& 
         //dst.h = 50;
         //SDL_RenderCopy(renderer, fire_sprite, nullptr, &dst);
 
-        TextureHandler::getInstance()->render(renderer, fire_sprite, Vector2<float>(500 - camera_x, 720 - (int)position + camera_y), Vector2<float>(0.098, 0.098));
+        TextureHandler::getInstance()->render(renderer, fire_sprite, Vector2<float>(500 - camera_x, 720 - (int)position + camera_y), Vector2<float>(3.125, 3.125));
     }
 
     /*SDL_Rect rock;
