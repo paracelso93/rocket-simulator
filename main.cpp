@@ -28,7 +28,18 @@ int main() {
 
     SDL_Texture* ground = IMG_LoadTexture(renderer, "res/ground2.png");
 
-    Rocket rocket(4640.f + 2000.f, 3600.f, renderer);
+    //Rocket rocket(4640.f + 2000.f, 3600.f, renderer);
+    RocketData rocket_data;
+    rocket_data.height = 5.45f;
+    rocket_data.diameter = 1.f;
+    rocket_data.name = "TsKB-7 solid (15D94)";
+    rocket_data.fuel = 3600.f;
+    rocket_data.mass = 4640.f + 2000.f;
+    rocket_data.fuel_consumption = 73.47f;
+    rocket_data.thrust = 180400.f;
+    TextureHandler::getInstance()->add_texture("res/obamium.png", rocket_data.rocket_sprite, renderer);
+    TextureHandler::getInstance()->set_src_rect(rocket_data.rocket_sprite, Vector2<float>(498, 498));
+    Rocket rocket(rocket_data, renderer);
     //Rocket rocket(4640.f + 2000.f, 1000.f, renderer);
     Uint32 startTime = 0;
     Uint32 endTime = 0;

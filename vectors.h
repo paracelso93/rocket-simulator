@@ -4,6 +4,8 @@
 
 #include "helper.h"
 
+#define PI 3.14159
+
 template <typename T>
 struct Vector2 {
 	T x, y;

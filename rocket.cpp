@@ -27,23 +27,54 @@ Rocket::Rocket(float mass, float fuel, SDL_Renderer* renderer) : position(100.f)
     height = 5.45f;
 }
 
+Rocket::Rocket(const RocketData& data, SDL_Renderer* renderer) {
+    this->position = 100.f;
+    this->initial_mass = data.mass;
+    this->mass = data.mass;
+    this->velocity = 0.f;
+    this->acceleration = 0.f;
+    this->fuel = data.fuel;
+    this->force = 0.f;
+    this->stopped = false;
+    this->dry_mass = this->mass - this->fuel;
+
+    TextureHandler::getInstance()->add_texture("res/flame.png", fire_sprite, renderer);
+    this->obamium = data.rocket_sprite;
+    //TextureHandler::getInstance()->add_texture("res/obamium.png", obamium, renderer);
+    //TextureHandler::getInstance()->set_src_rect(obamium, Vector2<float>(498, 498));
+
+    mass_text = nullptr;
+    acceleration_text = nullptr;
+    force_text = nullptr;
+    fuel_text = nullptr;
+    velocity_text = nullptr;
+    altitude_text = nullptr;
+
+    this->name = data.name;
+    this->diameter = data.diameter;
+    this->height = data.height;
+    this->thrust = data.thrust;
+    this->fuel_consumption = data.fuel_consumption;
+}
+
 void Rocket::update(float dt) {
     float mass_used = 0.f;
     if (!stopped) {
-        mass_used = dt * 73.47f;
+        mass_used = dt * fuel_consumption;
         mass = initial_mass - mass_used;
     }
 
-    float down_force = -9.81f * mass;
+    float down_force = -GRAVITATIONAL_ACCELERATION * mass;
     float thrust_force = 0.f;
 
     if (!stopped) {
         //float velocity_variation = 300.f * log(initial_mass / mass);
         //float up_acceleration = velocity_variation / dt;
-        thrust_force = 180400.f;
+        thrust_force = thrust;
     }
 
-    float drag_force = 1.05f * 1.225f * velocity * velocity * (diameter / 2.f) * (diameter / 2.f) * 3.141 / 2.f;
+    float radius = diameter / 2.f;
+    float drag_force = 1.05f * 1.225f * velocity * velocity * radius * radius * PI / 2.f;
     drag_force *= (velocity >= 0) ? -1 : 1;
 
     force = down_force + thrust_force + drag_force;
