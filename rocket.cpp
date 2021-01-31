@@ -40,11 +40,6 @@ Rocket::Rocket(const RocketData& data, SDL_Renderer* renderer) : obamium(data.ro
 
     TextureHandler::getInstance()->add_texture("res/flame.png", fire_sprite, renderer);
 
-    //this->obamium = data.rocket_sprite;
-
-    //TextureHandler::getInstance()->add_texture("res/obamium.png", obamium, renderer);
-    //TextureHandler::getInstance()->set_src_rect(obamium, Vector2<float>(498, 498));
-
     mass_text = new Label("", 10, 10, 255, 0, 0, 255);
     acceleration_text = new Label("", 10, 35, 255, 0, 0, 255);
     force_text = new Label("", 10, 60, 255, 0, 0, 255);
@@ -143,97 +138,13 @@ void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& 
     name_text->set_string(name_string);
     name_text->render(renderer, font);
 
-    /*SDL_Surface* mass_surface = TTF_RenderText_Solid(font, mass_string.c_str(), {255, 0, 0, 255});
-    mass_text = SDL_CreateTextureFromSurface(renderer, mass_surface);
-    SDL_FreeSurface(mass_surface);
-    SDL_Rect dst;
-    dst.x = 10;
-    dst.y = 10;
-    dst.w = 24 * mass_string.length() / 2;
-    dst.h = 24;
-    SDL_RenderCopy(renderer, mass_text, nullptr, &dst);
-    SDL_DestroyTexture(mass_text);
 
-
-    std::string velocity_string = "velocity: " + std::to_string(velocity);
-    SDL_Surface* velocity_surface = TTF_RenderText_Solid(font, velocity_string.c_str(), {255, 0, 0, 255});
-    velocity_text = SDL_CreateTextureFromSurface(renderer, velocity_surface);
-    SDL_FreeSurface(velocity_surface);
-    dst.w = 24 * mass_string.length() / 2;
-    dst.y = 35;
-    SDL_RenderCopy(renderer, velocity_text, nullptr, &dst);
-    SDL_DestroyTexture(velocity_text);
-
-
-    std::string force_string = "force: " + std::to_string(force);
-    SDL_Surface* force_surface = TTF_RenderText_Solid(font, force_string.c_str(), {255, 0, 0, 255});
-    force_text = SDL_CreateTextureFromSurface(renderer, force_surface);
-    SDL_FreeSurface(force_surface);
-    dst.w = 24 * mass_string.length() / 2;
-    dst.y = 60;
-    SDL_RenderCopy(renderer, force_text, nullptr, &dst);
-    SDL_DestroyTexture(force_text);
-
-
-    std::string acceleration_string = "acceleration: " + std::to_string(acceleration);
-    SDL_Surface* acceleration_surface = TTF_RenderText_Solid(font, acceleration_string.c_str(), {255, 0, 0, 255});
-    acceleration_text = SDL_CreateTextureFromSurface(renderer, acceleration_surface);
-    SDL_FreeSurface(acceleration_surface);
-    dst.w = 24 * acceleration_string.length() / 2;
-    dst.y = 85;
-    SDL_RenderCopy(renderer, acceleration_text, nullptr, &dst);
-    SDL_DestroyTexture(acceleration_text);
-
-
-    std::string fuel_string = "fuel: " + std::to_string(fuel);
-    SDL_Surface* fuel_surface = TTF_RenderText_Solid(font, fuel_string.c_str(), {255, 0, 0, 255});
-    fuel_text = SDL_CreateTextureFromSurface(renderer, fuel_surface);
-    SDL_FreeSurface(fuel_surface);
-    dst.w = 24 * fuel_string.length() / 2;
-    dst.y = 110;
-    SDL_RenderCopy(renderer, fuel_text, nullptr, &dst);
-    SDL_DestroyTexture(fuel_text);
-
-
-    std::string altitude_string = "altitude: " + std::to_string(position);
-    SDL_Surface* altitude_surface = TTF_RenderText_Solid(font, altitude_string.c_str(), {255, 0, 0, 255});
-    altitude_text = SDL_CreateTextureFromSurface(renderer, altitude_surface);
-    SDL_FreeSurface(altitude_surface);
-    dst.w = 24 * altitude_string.length() / 2;
-    dst.y = 135;
-    SDL_RenderCopy(renderer, altitude_text, nullptr, &dst);
-    SDL_DestroyTexture(altitude_text);
-
-
-    std::string name_string = "name: " + name;
-    SDL_Surface* name_surface = TTF_RenderText_Solid(font, name_string.c_str(), {255, 0, 0, 255});
-    name_text = SDL_CreateTextureFromSurface(renderer, name_surface);
-    SDL_FreeSurface(name_surface);
-    dst.w = 24 * name_string.length() / 2;
-    dst.y = 160;
-    SDL_RenderCopy(renderer, name_text, nullptr, &dst);
-    SDL_DestroyTexture(name_text);
-*/
     camera_y = position - 300;
+
     if (!stopped) {
-
-        //dst.x = 500 - camera_x;
-        //dst.y = 720 - (int)position + camera_y;
-        //dst.w = 50;
-        //dst.h = 50;
-        //SDL_RenderCopy(renderer, fire_sprite, nullptr, &dst);
-
         TextureHandler::getInstance()->render(renderer, fire_sprite, Vector2<float>(500 - camera_x, 720 - (int)position + camera_y), Vector2<float>(3.125, 3.125));
     }
 
-    /*SDL_Rect rock;
-    rock.x = 500 - camera_x;
-    rock.y = 600 - (int)position + camera_y;
-    rock.w = 50;
-    rock.h = 120;
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderDrawRect(renderer, &rock);*/
     obamium.position.y = 600 - (int)position + camera_y;
-    //TextureHandler::getInstance()->render(renderer, obamium, Vector2<float>(500 - camera_x, 600 - (int)position + camera_y), Vector2<float>(0.1f, 0.24f));
     obamium.render(renderer);
 }
