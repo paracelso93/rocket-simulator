@@ -8,7 +8,7 @@ int main() {
     SDL_Init(SDL_INIT_EVERYTHING);
     IMG_Init(IMG_INIT_PNG);
     TTF_Init();
-    SDL_Window* window = SDL_CreateWindow("Rocket", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1080, 720, SDL_WINDOW_SHOWN);
+    SDL_Window* window = SDL_CreateWindow("Rocket", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1080, 720, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (window == nullptr) {
         std::cerr << "ERROR::MAIN.CPP::MAIN:SDL_CREATE_WINDOW_FAILED" << std::endl;
         return -1;
@@ -70,7 +70,12 @@ int main() {
         }
 
         rocket.update(1.f / fps);
-        SDL_SetRenderDrawColor(renderer, 0x87, 0xCE, 0xEB, 255);
+        if (camera_y > 100) {
+            SDL_SetRenderDrawColor(renderer, 0x70, 0xB0, 0xCD, 255);
+        } else {
+            SDL_SetRenderDrawColor(renderer, 0x87, 0xD0, 0xEB, 255);
+        }
+        //std::cout << camera_y << std::endl;
         SDL_RenderClear(renderer);
 
 

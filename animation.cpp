@@ -22,30 +22,37 @@ Animation::Animation(const std::string& file_path, Vector2<float> position, int 
     this->height = h / rows;
     this->position = position;
     TextureHandler::getInstance()->set_src_rect(texture, Vector2<float>(width, height));
+    this->running = true;
+}
+
+void Animation::set_running(bool running) {
+    this->running = running;
 }
 
 void Animation::update(float dt) {
-    this->timer += dt;
-    if (timer >= timer_max) {
-        this->current_frame ++;
-        this->timer = 0.f;
-        if (this->current_frame >= num_total) {
-            this->current_frame = 0;
-            this->current_row = 0;
-            this->current_col = 0;
+    if (running) {
+        this->timer += dt;
+        if (timer >= timer_max) {
+            this->current_frame++;
+            this->timer = 0.f;
+            if (this->current_frame >= num_total) {
+                this->current_frame = 0;
+                this->current_row = 0;
+                this->current_col = 0;
 
-            TextureHandler::getInstance()->set_src_position(texture, Vector2<float>(0, 0));
-        } else {
-
-            this->current_col++;
-            if (current_col >= cols) {
-                current_col = 0;
-                current_row++;
-
-                TextureHandler::getInstance()->set_src_position(texture, Vector2<float>(0, current_row * height));
+                TextureHandler::getInstance()->set_src_position(texture, Vector2<float>(0, 0));
             } else {
-                TextureHandler::getInstance()->set_src_position(texture, Vector2<float>(current_col * width,
-                                                                                        current_row * height));
+
+                this->current_col++;
+                if (current_col >= cols) {
+                    current_col = 0;
+                    current_row++;
+
+                    TextureHandler::getInstance()->set_src_position(texture, Vector2<float>(0, current_row * height));
+                } else {
+                    TextureHandler::getInstance()->set_src_position(texture, Vector2<float>(current_col * width,
+                                                                                            current_row * height));
+                }
             }
         }
     }

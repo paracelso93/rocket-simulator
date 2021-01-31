@@ -45,12 +45,13 @@ Rocket::Rocket(const RocketData& data, SDL_Renderer* renderer) : obamium(data.ro
     //TextureHandler::getInstance()->add_texture("res/obamium.png", obamium, renderer);
     //TextureHandler::getInstance()->set_src_rect(obamium, Vector2<float>(498, 498));
 
-    mass_text = nullptr;
-    acceleration_text = nullptr;
-    force_text = nullptr;
-    fuel_text = nullptr;
-    velocity_text = nullptr;
-    altitude_text = nullptr;
+    mass_text = new Label("", 10, 10, 255, 0, 0, 255);
+    acceleration_text = new Label("", 10, 35, 255, 0, 0, 255);
+    force_text = new Label("", 10, 60, 255, 0, 0, 255);
+    fuel_text = new Label("", 10, 85, 255, 0, 0, 255);
+    velocity_text = new Label("", 10, 110, 255, 0, 0, 255);
+    altitude_text = new Label("", 10, 135, 255, 0, 0, 255);
+    name_text = new Label("", 10, 160, 255, 0, 0, 255);
 
     this->name = data.name;
     this->diameter = data.diameter;
@@ -96,6 +97,10 @@ void Rocket::update(float dt) {
         velocity = 0.f;
     }
 
+    if (position <= 101.f && stopped) {
+        obamium.set_running(false);
+    }
+
     obamium.update(dt);
 }
 
@@ -111,7 +116,34 @@ void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& 
     SDL_RenderDrawRect(renderer, &big_rect);
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     std::string mass_string = "mass: " + std::to_string(mass);
-    SDL_Surface* mass_surface = TTF_RenderText_Solid(font, mass_string.c_str(), {255, 0, 0, 255});
+    mass_text->set_string(mass_string);
+    mass_text->render(renderer, font);
+
+    std::string velocity_string = "velocity: " + std::to_string(velocity);
+    velocity_text->set_string(velocity_string);
+    velocity_text->render(renderer, font);
+
+    std::string force_string = "force: " + std::to_string(force);
+    force_text->set_string(force_string);
+    force_text->render(renderer, font);
+
+    std::string acceleration_string = "acceleration: " + std::to_string(acceleration);
+    acceleration_text->set_string(acceleration_string);
+    acceleration_text->render(renderer, font);
+
+    std::string fuel_string = "fuel: " + std::to_string(fuel);
+    fuel_text->set_string(fuel_string);
+    fuel_text->render(renderer, font);
+
+    std::string altitude_string = "altitude: " + std::to_string(position);
+    altitude_text->set_string(altitude_string);
+    altitude_text->render(renderer, font);
+
+    std::string name_string = "name: " + name;
+    name_text->set_string(name_string);
+    name_text->render(renderer, font);
+
+    /*SDL_Surface* mass_surface = TTF_RenderText_Solid(font, mass_string.c_str(), {255, 0, 0, 255});
     mass_text = SDL_CreateTextureFromSurface(renderer, mass_surface);
     SDL_FreeSurface(mass_surface);
     SDL_Rect dst;
@@ -181,7 +213,7 @@ void Rocket::render(SDL_Renderer* renderer, TTF_Font *font, int& camera_x, int& 
     dst.y = 160;
     SDL_RenderCopy(renderer, name_text, nullptr, &dst);
     SDL_DestroyTexture(name_text);
-
+*/
     camera_y = position - 300;
     if (!stopped) {
 

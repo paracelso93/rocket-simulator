@@ -12,6 +12,7 @@
 #include <string>
 
 #include "animation.h"
+#include "label.h"
 
 const float GRAVITATIONAL_ACCELERATION =  9.80665f;
 
@@ -42,15 +43,15 @@ private:
     bool stopped;
     float thrust;
     float fuel_consumption;
-    SDL_Texture* mass_text;
-    SDL_Texture* acceleration_text;
-    SDL_Texture* force_text;
-    SDL_Texture* fuel_text;
-    SDL_Texture* velocity_text;
+    Label* mass_text;
+    Label* acceleration_text;
+    Label* force_text;
+    Label* fuel_text;
+    Label* velocity_text;
     texture_t fire_sprite;
     Animation obamium;
-    SDL_Texture* altitude_text;
-    SDL_Texture* name_text;
+    Label* altitude_text;
+    Label* name_text;
     std::string name;
 
 public:

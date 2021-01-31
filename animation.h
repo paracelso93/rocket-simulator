@@ -12,9 +12,11 @@ public:
     Animation(const std::string& file_path, Vector2<float> position, int rows, int cols, int total_frames, float time, SDL_Renderer* renderer);
     void update(float dt);
     void render(SDL_Renderer* renderer);
+    void set_running(bool running);
 
     Vector2<float> position;
 private:
+    bool running;
     int rows;
     int cols;
     float timer;
